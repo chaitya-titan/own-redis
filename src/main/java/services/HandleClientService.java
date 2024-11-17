@@ -11,6 +11,7 @@ public class HandleClientService {
         ArrayList<ArrayList<String>> arr = new ArrayList<>();
         try {
             BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            SetValueService setValueService = new SetValueService(clientSocket);
             while (true) {
                 String line = input.readLine();
                 System.out.println(line);
@@ -22,6 +23,23 @@ public class HandleClientService {
                     clientSocket.getOutputStream().write(
                             String.format("$%d\r\n%s\r\n", data.length(), data)
                                     .getBytes());
+                }else if(line.equalsIgnoreCase("set")){
+                    input.readLine();
+                    String key = input.readLine();
+                    input.readLine();
+                    String value = input.readLine();
+
+                    System.out.println(key + " " + value);
+
+                    setValueService.setValue(key, value);
+
+                }else if(line.equalsIgnoreCase("get")){
+                    input.readLine();
+                    String key = input.readLine();
+
+                    System.out.println(key);
+
+                    setValueService.getValue(key);
                 }
             }
         } catch (IOException e){

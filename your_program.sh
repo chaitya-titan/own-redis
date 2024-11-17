@@ -24,6 +24,4 @@ set -e # Exit early if any commands fail
 
 exec java -jar /tmp/codecrafters-build-redis-java/codecrafters-redis.jar "$@"
 
-echo PING
-
 

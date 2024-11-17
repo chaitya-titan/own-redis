@@ -1,5 +1,7 @@
 package services;
 
+import controllers.ConfigController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,10 +9,13 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class HandleClientService {
-    public void handleClient(Socket clientSocket) {
+    public void handleClient(Socket clientSocket, String[] args) {
         try {
             BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             SetValueService setValueService = new SetValueService(clientSocket);
+
+            ConfigController configController = new ConfigController(clientSocket);
+
             String commandsLength = "";
 
             while (true) {
@@ -47,6 +52,10 @@ public class HandleClientService {
 
                     case "get":
                         handleGetCommand(input, setValueService);
+                        break;
+
+                    case "config":
+                        configController.handleGetConfigCommand(input, args);
                         break;
 
                     default:

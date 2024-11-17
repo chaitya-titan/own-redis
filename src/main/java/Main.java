@@ -29,7 +29,7 @@ public class Main {
 
                 new Thread(() -> {
                     HandleClientService handleClientService = new HandleClientService();
-                    handleClientService.handleClient(tempSocket);
+                    handleClientService.handleClient(tempSocket, args);
                 }).start();
             }
 
